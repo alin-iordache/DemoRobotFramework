@@ -1,0 +1,15 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+Count Elements
+    [Arguments]    ${locator}
+    @{elements}    Create List
+    Wait Until Element Is Visible    ${locator}
+    @{elements}    Execute Javascript    return document.getElementsByClassName("g");
+    ${counter}    Evaluate    0
+    :FOR    ${var}    IN    @{elements}
+    \    Log    ${var}
+    \    ${counter}    Evaluate    ${counter} + 1
+    Log    ${counter}
+    [Return]    ${counter}

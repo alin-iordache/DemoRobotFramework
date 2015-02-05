@@ -1,0 +1,2 @@
+*** Variables ***
+${result_entry}    //*[@class="g"]
