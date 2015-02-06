@@ -1,2 +1,5 @@
 *** Variables ***
 ${result_entry}    //*[@class="g"]
+${search_textfield}    gbqfq
+${autocomplete_list}    //*[@role="listbox"]
+${search_button}    gbqfb

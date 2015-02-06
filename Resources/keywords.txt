@@ -1,5 +1,6 @@
 *** Settings ***
 Library           Selenium2Library
+Resource          locators.txt
 
 *** Keywords ***
 Count Elements
@@ -8,8 +9,33 @@ Count Elements
     Wait Until Element Is Visible    ${locator}
     @{elements}    Execute Javascript    return document.getElementsByClassName("g");
     ${counter}    Evaluate    0
-    :FOR    ${var}    IN    @{elements}
+    : FOR    ${var}    IN    @{elements}
     \    Log    ${var}
     \    ${counter}    Evaluate    ${counter} + 1
     Log    ${counter}
     [Return]    ${counter}
+
+The Google page is opened
+    Open Browser    http://www.google.ro
+
+The user types "${text}"
+    Input Text    ${search_textfield}    ${text}
+    Wait Until Element Is Visible    ${autocomplete_list}
+
+Clicks the search button
+    Click Button    ${search_button}
+
+I see a lot of results
+    Wait Until Element Is Visible    ${result_entry}
+    ${found}    Get Matching Xpath Count    ${result_entry}
+    Should Be True    ${found} >= 1
+
+Search
+    [Arguments]    ${text}
+    Open Browser    http://www.google.ro
+    Input Text    gbqfq    ${text}
+    Wait Until Element Is Visible    //*[@role="listbox"]
+    Click Button    gbqfb
+    Wait Until Element Is Visible    ${result_entry}
+    ${found}    Get Matching Xpath Count    ${result_entry}
+    Should Be True    ${found} >= 1
